@@ -1,7 +1,8 @@
-
+.firebase
 .cache/
 coverage/
-dist/*
+dist/
+public/
 !dist/index.html
 node_modules/
 *.log
