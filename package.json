@@ -10,7 +10,9 @@
     "clean": "rm dist/bundle.js",
     "start": "parcel src/index.html",
     "build-prod": "parcel build src/index.html --out-dir public",
-    "serve-prod": "parcel public/index.html"
+    "serve-prod": "parcel public/index.html",
+    "deploy:hosting": "firebase deploy --only hosting",
+    "deploy:all": "firebase deploy"
   },
   "dependencies": {
     "react": "^16.13.1",
