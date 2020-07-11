@@ -10,17 +10,19 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+
     - name: Install firebase-tools
       run: |
         sudo npm install -g firebase-tools
         firebase use uniform-smoeng --token ${{ secrets.FIREBASE_TOKEN }}
-        
-    - name: Build website
+    
+    - name: Install dependencies & Build website
       run: |
-        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
-        git config --global http.https\:\/\/github.com\/.extraheader "$auth_header"
-        git config --local --unset-all http.https\:\/\/github.com\/.extraheader
-        npm install
+        npm ci
         npm build-prod
         
     - name: Deploy to production site
