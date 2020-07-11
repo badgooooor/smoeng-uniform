@@ -8,6 +8,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import SummaryDialog from "../components/SummaryDialog";
 
 interface OrderFormValue {
   status: string;
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({}));
 export default function OrderForm() {
   const classes = useStyles();
   const initialValues: OrderFormValue = { status: "unpaid", orders: [] };
+  const [summaryOpen, setSummaryOpen] = React.useState(false);
 
   return (
     <Layout>
@@ -110,6 +112,9 @@ export default function OrderForm() {
                     <Button
                       type="submit"
                       disabled={values.orders.length == 0}
+                      onClick={() => {
+                        setSummaryOpen(true);
+                      }}
                       fullWidth
                     >
                       <Box display="flex" component="span" justifyContent="center">
@@ -119,6 +124,13 @@ export default function OrderForm() {
                     </Button>
                   </div>
                 )}
+              />
+              <SummaryDialog
+                open={summaryOpen}
+                onClose={() => {
+                  setSummaryOpen(false);
+                }}
+                orders={values.orders}
               />
             </Form>
           )}
