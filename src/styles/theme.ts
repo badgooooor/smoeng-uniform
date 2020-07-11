@@ -15,6 +15,11 @@ const theme = createMuiTheme({
       contrastText: "#000000"
     }
   },
+  typography: {
+    fontFamily: [
+      "Kanit", "sans-serif"
+    ].join(",")
+  }
 })
 
 export default theme;
