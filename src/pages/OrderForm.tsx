@@ -9,6 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import SummaryDialog from "../components/SummaryDialog";
+import Product from "../types/product";
 
 interface OrderFormValue {
   status: string;
@@ -30,8 +31,19 @@ export default function OrderForm() {
           initialValues={initialValues}
           onSubmit={(values, actions) => {
             console.log(values, actions);
+            setSummaryOpen(true)
           }}
-          render={({ values }) => (
+          validate={(values) => {
+            let errors: Array<any> = [];
+
+            values.orders.forEach((order: Product, index) => {
+              if (!order.product) errors[index].product = true;
+              if (!order.size) errors[index].size = true;
+              if (!order.amount) errors[index].amount = true;
+            });
+            return errors;
+          }}
+          render={({ values, isValid }) => (
             <Form>
               <FieldArray
                 name="orders"
@@ -44,7 +56,7 @@ export default function OrderForm() {
                             <Box p={2}>
                               {index + 1}.
                           <Grid container spacing={2} alignItems="center" key={index}>
-                                <Grid item xs={12} sm={3}>
+                                <Grid item xs={12} sm={4}>
                                   <Field
                                     required
                                     component={Select}
@@ -57,7 +69,7 @@ export default function OrderForm() {
                                     variant="outlined"
                                   />
                                 </Grid>
-                                <Grid item xs={12} sm={3}>
+                                <Grid item xs={12} sm={4}>
                                   <Field
                                     required
                                     component={Select}
@@ -72,8 +84,9 @@ export default function OrderForm() {
                                     variant="outlined"
                                   />
                                 </Grid>
-                                <Grid item xs={12} sm={3}>
+                                <Grid item xs={12} sm={2}>
                                   <Field
+                                    required
                                     name={`orders.${index}.amount`}
                                     type="number"
                                     label="จำนวน"
@@ -81,7 +94,7 @@ export default function OrderForm() {
                                     variant="outlined"
                                   />
                                 </Grid>
-                                <Grid item xs={12} sm={3}>
+                                <Grid item xs={12} sm={1}>
                                   <IconButton onClick={() => arrayHelpers.remove(index)}>
                                     <DeleteIcon fontSize="large" />
                                   </IconButton>
@@ -112,9 +125,6 @@ export default function OrderForm() {
                     <Button
                       type="submit"
                       disabled={values.orders.length == 0}
-                      onClick={() => {
-                        setSummaryOpen(true);
-                      }}
                       fullWidth
                     >
                       <Box display="flex" component="span" justifyContent="center">
