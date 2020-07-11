@@ -23,7 +23,7 @@ jobs:
     - name: Install dependencies & Build website
       run: |
         npm ci
-        npm build-prod
+        npm run build-prod
         
     - name: Deploy to production site
       if: github.ref == 'refs/heads/master'
