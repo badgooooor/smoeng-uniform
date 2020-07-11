@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: "flex",
       minHeight: "100vh",
-      flexDirection: "column"
+      flexDirection: "column",
+      minWidth: "100%"
     },
     body: {
       height: "90vh",
@@ -37,7 +38,6 @@ export default function Layout(props: Props) {
           {props.children}
         </Box>
       </Container>
-      <Footer className={classes.footer} />
     </div>
   )
 }
