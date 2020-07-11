@@ -1,8 +1,4 @@
 body {
   margin: 0px;
-}
-
-h1 {
-  color: white;
-  background-color: black;
+  font-family: 'Kanit', sans-serif;
 }
