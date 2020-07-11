@@ -17,6 +17,9 @@ jobs:
         
     - name: Build website
       run: |
+        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
+        git config --global http.https\:\/\/github.com\/.extraheader "$auth_header"
+        git config --local --unset-all http.https\:\/\/github.com\/.extraheader
         npm install
         npm build-prod
         
