@@ -1,8 +1,11 @@
-import * as React from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import * as React from "react";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+
+import { signInWithGoogle, auth } from "../firebase.utils";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -15,11 +18,12 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       flexGrow: 1,
     },
-  }),
+  })
 );
 
 export default function ButtonAppBar() {
   const classes = useStyles();
+  const [loginOpen, setLoginOpen] = React.useState(false);
 
   return (
     <div className={classes.root}>
@@ -28,6 +32,9 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             จองเสื้อวิศวะลาดกระบัง
           </Typography>
+          <Button color="inherit" onClick={signInWithGoogle}>
+            Login
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
