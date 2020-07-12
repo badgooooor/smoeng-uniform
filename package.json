@@ -17,6 +17,8 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
+    "@types/react-router-dom": "^5.1.5",
+    "dotenv": "^8.2.0",
     "firebase": "^7.16.0",
     "fontsource-roboto": "^2.1.4",
     "formik": "^2.1.4",
