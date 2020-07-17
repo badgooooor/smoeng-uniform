@@ -1,6 +1,7 @@
 import * as firebase from "firebase/app";
 import * as dotenv from "dotenv";
 import "firebase/auth";
+import { user_store } from "./stores/user";
 
 dotenv.config();
 
@@ -25,7 +26,8 @@ export const signInWithGoogle = () =>
   auth
     .signInWithPopup(provider)
     .then((result) => {
-      console.log(result);
+      let displayName = result.additionalUserInfo?.profile.given_name + " " + result.additionalUserInfo?.profile.family_name;
+      user_store.update(displayName, result.additionalUserInfo?.profile.id);
     })
     .catch((error) => {
       console.log(error);
