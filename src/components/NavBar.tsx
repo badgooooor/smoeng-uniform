@@ -4,6 +4,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import { user_store } from '../stores/user';
+import { observer } from 'mobx-react';
 
 import { signInWithGoogle, auth } from "../firebase.utils";
 
@@ -21,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function ButtonAppBar() {
+const ButtonAppBar = observer(() => {
   const classes = useStyles();
   const [loginOpen, setLoginOpen] = React.useState(false);
 
@@ -32,11 +34,17 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             จองเสื้อวิศวะลาดกระบัง
           </Typography>
-          <Button color="inherit" onClick={signInWithGoogle}>
-            Login
+          {
+            user_store.displayName ? <Typography variant="body1">
+              {user_store.displayName}
+            </Typography> : <Button color="inherit" onClick={signInWithGoogle}>
+                Login
           </Button>
+          }
         </Toolbar>
       </AppBar>
     </div>
   );
-}
+});
+
+export default ButtonAppBar;
