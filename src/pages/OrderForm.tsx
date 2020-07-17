@@ -1,13 +1,13 @@
 import * as React from "react";
-import { Formik, Form, Field, FieldArray } from 'formik';
-import Layout from "../containers/Layout"
-import { Select } from 'material-ui-formik-components/Select'
+import { Formik, Form, Field, FieldArray } from "formik";
+import Layout from "../containers/Layout";
+import { Select } from "material-ui-formik-components/Select";
 import { TextField } from "material-ui-formik-components/TextField";
 import { Button, Grid, IconButton, Box, Paper } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddIcon from '@material-ui/icons/Add';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import DeleteIcon from "@material-ui/icons/Delete";
+import AddIcon from "@material-ui/icons/Add";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import SummaryDialog from "../components/SummaryDialog";
 import Product from "../types/product";
 
@@ -31,7 +31,7 @@ export default function OrderForm() {
           initialValues={initialValues}
           onSubmit={(values, actions) => {
             console.log(values, actions);
-            setSummaryOpen(true)
+            setSummaryOpen(true);
           }}
           validate={(values) => {
             let errors: Array<any> = [];
@@ -47,7 +47,7 @@ export default function OrderForm() {
             <Form>
               <FieldArray
                 name="orders"
-                render={arrayHelpers => (
+                render={(arrayHelpers) => (
                   <div>
                     {values.orders && values.orders.length > 0 ? (
                       values.orders.map((order, index) => (
@@ -55,7 +55,12 @@ export default function OrderForm() {
                           <Paper>
                             <Box p={2}>
                               {index + 1}.
-                          <Grid container spacing={2} alignItems="center" key={index}>
+                              <Grid
+                                container
+                                spacing={2}
+                                alignItems="center"
+                                key={index}
+                              >
                                 <Grid item xs={12} sm={4}>
                                   <Field
                                     required
@@ -64,7 +69,10 @@ export default function OrderForm() {
                                     label="สินค้า"
                                     options={[
                                       { value: "เสื้อชอป", label: "เสื้อชอป" },
-                                      { value: "เสื้อโปโล", label: "เสื้อโปโล" }
+                                      {
+                                        value: "เสื้อโปโล",
+                                        label: "เสื้อโปโล",
+                                      },
                                     ]}
                                     variant="outlined"
                                   />
@@ -79,7 +87,7 @@ export default function OrderForm() {
                                       { value: "S", label: "S" },
                                       { value: "M", label: "M" },
                                       { value: "L", label: "L" },
-                                      { value: "XL", label: "XL" }
+                                      { value: "XL", label: "XL" },
                                     ]}
                                     variant="outlined"
                                   />
@@ -95,7 +103,9 @@ export default function OrderForm() {
                                   />
                                 </Grid>
                                 <Grid item xs={12} sm={1}>
-                                  <IconButton onClick={() => arrayHelpers.remove(index)}>
+                                  <IconButton
+                                    onClick={() => arrayHelpers.remove(index)}
+                                  >
                                     <DeleteIcon fontSize="large" />
                                   </IconButton>
                                 </Grid>
@@ -105,29 +115,39 @@ export default function OrderForm() {
                         </Box>
                       ))
                     ) : (
-                        <></>
+                      <></>
+                    )}
+                    <Button onClick={() => arrayHelpers.push("")} fullWidth>
+                      {values.orders.length == 0 ? (
+                        <Box
+                          display="flex"
+                          component="span"
+                          justifyContent="center"
+                        >
+                          <AddIcon fontSize="small" />
+                          <span>เพิ่มออร์เดอร์เพื่อเริ่มการสั่งซื้อ</span>
+                        </Box>
+                      ) : (
+                        <Box
+                          display="flex"
+                          component="span"
+                          justifyContent="center"
+                        >
+                          <AddIcon fontSize="small" />
+                          <span>เพิ่มออร์เดอร์</span>
+                        </Box>
                       )}
-                    <Button onClick={() => arrayHelpers.push('')} fullWidth>
-                      {
-                        values.orders.length == 0 ? (
-                          <Box display="flex" component="span" justifyContent="center">
-                            <AddIcon fontSize="small" />
-                            <span>เพิ่มออร์เดอร์เพื่อเริ่มการสั่งซื้อ</span>
-                          </Box>
-                        ) : (
-                            <Box display="flex" component="span" justifyContent="center">
-                              <AddIcon fontSize="small" />
-                              <span>เพิ่มออร์เดอร์</span>
-                            </Box>
-                          )
-                      }
                     </Button>
                     <Button
                       type="submit"
                       disabled={values.orders.length == 0}
                       fullWidth
                     >
-                      <Box display="flex" component="span" justifyContent="center">
+                      <Box
+                        display="flex"
+                        component="span"
+                        justifyContent="center"
+                      >
                         <ShoppingCartIcon fontSize="small" />
                         <span>สั่งซื้อ</span>
                       </Box>
@@ -147,5 +167,5 @@ export default function OrderForm() {
         />
       </React.Fragment>
     </Layout>
-  )
+  );
 }

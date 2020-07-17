@@ -1,6 +1,6 @@
 # smoeng-uniform
 
-Empty project.
+![Firebase CI/CD](https://github.com/borbier/smoeng-uniform/workflows/Firebase%20CI/CD/badge.svg)
 
 ## Building and running on localhost
 
