@@ -26,8 +26,13 @@ export const signInWithGoogle = () =>
   auth
     .signInWithPopup(provider)
     .then((result) => {
-      let displayName = result.additionalUserInfo?.profile.given_name + " " + result.additionalUserInfo?.profile.family_name;
-      user_store.update(displayName, result.additionalUserInfo?.profile.id);
+      let userId = result.additionalUserInfo?.profile.id;
+      let displayName = result.user?.displayName;
+      let isNewUser = result.additionalUserInfo?.isNewUser;
+      let photoUrl = result.user?.photoURL;
+      let email = result.user?.email;
+
+      user_store.update(displayName, userId, photoUrl, email);
     })
     .catch((error) => {
       console.log(error);
