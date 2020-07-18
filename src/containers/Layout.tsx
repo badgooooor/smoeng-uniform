@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '100vw'
   },
   body: {
-    padding: '10px'
+    padding: '20px 10px'
   }
 }));
 
