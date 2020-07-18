@@ -32,10 +32,3 @@ export async function deleteOrder(userId: string, orderId: string) {
   const ref = await db.collection("users").doc(userId).collection("orders").doc(orderId).delete();
   return ref.writeTime;
 }
-// module.exports.updateOrder = (userId, orderId, data) => {
-
-// }
-
-// module.exports.deleteOrder = (userId, orderId) => {
-
-// }
