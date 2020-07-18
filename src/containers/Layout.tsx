@@ -10,34 +10,27 @@ interface Props {
   children: React.ReactElement;
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: "flex",
-      minHeight: "100vh",
-      flexDirection: "column",
-      minWidth: "100%"
-    },
-    body: {
-      height: "90vh",
-      flexGrow: 1,
-    },
-    footer: {
-      height: "30px"
-    }
-  }),
-);
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: '100vw'
+  },
+  body: {
+    padding: '10px'
+  }
+}));
 
 export default function Layout(props: Props) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <NavBar />
-      <Container className={classes.body}>
-        <Box my={2}>
-          {props.children}
-        </Box>
-      </Container>
+      <Box className={classes.body}>
+        {props.children}
+      </Box>
+
     </div>
   )
 }

@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
+    width: "90%",
+    margin: "auto",
     backgroundColor: theme.palette.secondary.dark,
     border: "none",
     outline: "none",
@@ -37,27 +38,30 @@ const Home = observer(() => {
 
   return (
     <Layout>
-      <React.Fragment>
+      <>
         {
-          user_store.displayName && <Grid container spacing={2} alignItems="center">
+          user_store.displayName &&
+          <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <Link to="/newOrder" style={{ textDecoration: "none" }}>
-                <Box className={classes.quickMenu} component="button" m={1}>
+                <Box className={classes.quickMenu} component="button">
                   <AddShoppingCartIcon />
                   <p>สร้าง order ใหม่</p>
                 </Box>
               </Link>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Box className={classes.quickMenu} component="button" m={1}>
-                <ShoppingCartIcon />
-                <p>ดูการสั่งซื้อ</p>
-              </Box>
+              <Link to="/#" style={{ textDecoration: "none" }}>
+                <Box className={classes.quickMenu} component="button">
+                  <ShoppingCartIcon />
+                  <p>ดูการสั่งซื้อ</p>
+                </Box>
+              </Link>
             </Grid>
           </Grid>
         }
-        {/* Add catalog here */}
-      </React.Fragment>
+      </>
+
     </Layout>
   );
 })
