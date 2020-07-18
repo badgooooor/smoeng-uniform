@@ -4,7 +4,7 @@ import Layout from "../containers/Layout";
 export default function Settings() {
   return (
     <Layout>
-      <p>Settings</p>
+      <p>Profile</p>
     </Layout>
   );
 }

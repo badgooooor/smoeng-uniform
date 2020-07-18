@@ -5,8 +5,8 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import Home from "./pages/Home";
 import OrderForm from "./pages/OrderForm";
 import OrderList from "./pages/OrderList";
+import Profile from "./pages/Profile";
 import theme from "./styles/theme";
-import Settings from "./pages/Settings";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/neworder" component={OrderForm} />
         <Route exact path="/orders" component={OrderList} />
-        <Route exact path="/settings" component={Settings} />
+        <Route exact path="/profile" component={Profile} />
       </BrowserRouter>
     </ThemeProvider>
   );
