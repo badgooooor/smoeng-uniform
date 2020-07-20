@@ -1,4 +1,5 @@
 import * as React from "react"
+import axios from "axios"
 import { observer } from "mobx-react";
 import { user_store } from "../../stores/user";
 import { Formik, Form, Field, FieldArray } from "formik";
@@ -51,6 +52,7 @@ const Contact = observer(() => {
               initialValues={initialValues}
               onSubmit={(values, actions) => {
                 console.log(values, actions);
+
                 user_store.updateContact(values.telNumber);
                 toggleEdit();
               }}

@@ -23,6 +23,9 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -65,10 +68,21 @@ const ListItemLink = (props) => {
     [to],
   );
 
+  const ImageLink = () => {
+    if (to === "/") {
+      return <ListItemIcon>
+        <ShoppingBasketIcon />
+      </ListItemIcon>
+    } else {
+      return <ListItemIcon>
+        <AccountBoxIcon />
+      </ListItemIcon>
+    }
+  }
   return (
     <li>
       <ListItem button component={CustomLink}>
-        <ListItemIcon>{icon}</ListItemIcon>
+        <ImageLink />
         <ListItemText primary={primary} />
       </ListItem>
     </li>
@@ -127,15 +141,12 @@ const ButtonAppBar = observer(() => {
           </div>
           <Divider />
           <List>
+            <ListItemLink to="/" primary="คำสั่งซื้อ" />
             <ListItemLink to="/profile" primary="โปรไฟล์" />
-            {/* <ListItem button>
-              <ListItemIcon><SettingsIcon /></ListItemIcon>
-              <ListItemText primary={"ตั้งค่า"} />
-            </ListItem> */}
           </List>
           <Divider />
           <List>
-            <ListItem button onClick={() => { user_store.clear() }}>
+            <ListItem button onClick={() => { user_store.clear(); }}>
               <ListItemIcon><ExitToAppIcon /></ListItemIcon>
               <ListItemText primary={"ออกจากระบบ"} />
             </ListItem>
