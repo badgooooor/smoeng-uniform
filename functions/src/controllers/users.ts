@@ -7,8 +7,8 @@ export async function getUser(userId: string) {
     .doc(userId)
     .get()
     .then((snapshot) => {
-      let data = snapshot.data();
-      return data;
+      let snapshotData = snapshot.data();
+      return snapshotData;
     })
 
   return data;
