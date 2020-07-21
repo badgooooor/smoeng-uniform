@@ -62,14 +62,17 @@ const SummaryDialog = observer((props: Props) => {
             <em>กรุณาตรวจสอบรายการก่อนยืนยันการสั่งซื้อ</em>
           </Box>
         ) : (
-          <Box>
+          <Box display="flex" flexDirection="column">
             <h2>QR Code สำหรับรับสินค้าที่สั่งที่สโมสรนักศึกษา</h2>
             <QRCode
               bgColor="#FFFFFF"
               fgColor="#000000"
               level="Q"
               style={{ width: 256 }}
-              value={orderId}
+              value={JSON.stringify({
+                orderId: orderId,
+                userId: user_store.userId,
+              })}
             />
             <em>กรุณาถ่ายภาพหน้าจอเพื่อ checkout ให้กับหน้าร้าน</em>
           </Box>
