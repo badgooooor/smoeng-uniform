@@ -2,6 +2,7 @@ import * as firebase from "firebase/app";
 import * as dotenv from "dotenv";
 import "firebase/auth";
 import { user_store } from "./stores/user";
+import Axios from "axios";
 
 dotenv.config();
 
@@ -25,13 +26,19 @@ provider.setCustomParameters({ prompt: "select_account" });
 export const signInWithGoogle = () =>
   auth
     .signInWithPopup(provider)
-    .then((result) => {
-      let userId = result.additionalUserInfo?.profile.id;
-      let displayName = result.user?.displayName;
+    .then(async (result) => {
+      let userId = result.additionalUserInfo?.profile.id || "";
+      let displayName = result.user?.displayName || "";
       let isNewUser = result.additionalUserInfo?.isNewUser;
-      let photoUrl = result.user?.photoURL;
-      let email = result.user?.email;
+      let photoUrl = result.user?.photoURL || "";
+      let email = result.user?.email || "";
 
+      if (isNewUser) {
+        const user = await Axios.post(
+          `https://asia-northeast1-uniform-smoeng.cloudfunctions.net/api/users/${userId}`
+        ).then((response) => response.data);
+        console.log(user);
+      }
       user_store.update(displayName, userId, photoUrl, email);
     })
     .catch((error) => {

@@ -1,22 +1,48 @@
 import * as React from "react";
-import { Dialog, Button, Box, DialogTitle, DialogContent, DialogActions } from "@material-ui/core"
+import {
+  Dialog,
+  Button,
+  Box,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@material-ui/core";
 import { QRCode } from "react-qr-svg";
 import Product from "../types/product";
-
+import Axios from "axios";
+import { user_store } from "../stores/user";
+import { observer } from "mobx-react";
 interface Props {
   open: boolean;
   orders: Array<Product>;
   onClose: () => void;
 }
 
-export default function SummaryDialog(props: Props) {
+const SummaryDialog = observer((props: Props) => {
   const [confirm, setConfirm] = React.useState(false);
   const [orderId, setOrderId] = React.useState("order.id");
 
   const handleClose = () => {
     props.onClose();
     setConfirm(false);
-  }
+  };
+
+  React.useEffect(() => {
+    async function postOrders() {
+      if (confirm) {
+        const responseData = await Axios.post(
+          `https://asia-northeast1-uniform-smoeng.cloudfunctions.net/api/orders/${user_store.userId}`,
+          {
+            orders: props.orders,
+            status: "unpaid",
+          }
+        ).then((response) => response.data);
+        setOrderId(responseData.ref);
+      }
+    }
+
+    postOrders();
+  }, [confirm]);
 
   return (
     <Dialog open={props.open} onClose={handleClose}>
@@ -27,47 +53,50 @@ export default function SummaryDialog(props: Props) {
             <Box>
               <ul>
                 {props.orders.map((order, index) => (
-                  <li>{order.product} ขนาด {order.size} จำนวน {order.amount} ตัว</li>
+                  <li>
+                    {order.product} ขนาด {order.size} จำนวน {order.amount} ตัว
+                  </li>
                 ))}
               </ul>
             </Box>
             <em>กรุณาตรวจสอบรายการก่อนยืนยันการสั่งซื้อ</em>
           </Box>
         ) : (
-            <Box>
-              <h2>QR Code สำหรับรับสินค้าที่สั่งที่สโมสรนักศึกษา</h2>
-              <QRCode
-                bgColor="#FFFFFF"
-                fgColor="#000000"
-                level="Q"
-                style={{ width: 256 }}
-                value={orderId}
-              />
-              <em>กรุณาถ่ายภาพหน้าจอเพื่อ checkout ให้กับหน้าร้าน</em>
-            </Box>
-          )}
+          <Box display="flex" flexDirection="column">
+            <h2>QR Code สำหรับรับสินค้าที่สั่งที่สโมสรนักศึกษา</h2>
+            <QRCode
+              bgColor="#FFFFFF"
+              fgColor="#000000"
+              level="Q"
+              style={{ width: 256 }}
+              value={JSON.stringify({
+                orderId: orderId,
+                userId: user_store.userId,
+              })}
+            />
+            <em>กรุณาถ่ายภาพหน้าจอเพื่อ checkout ให้กับหน้าร้าน</em>
+          </Box>
+        )}
       </DialogContent>
       <DialogActions>
-        {
-          !confirm ? (
-            <>
-              <Button onClick={handleClose}>
-                ยกเลิก
-              </Button>
-              <Button color="primary" onClick={() => {
+        {!confirm ? (
+          <>
+            <Button onClick={handleClose}>ยกเลิก</Button>
+            <Button
+              color="primary"
+              onClick={() => {
                 setConfirm(true);
-              }}>
-                ยืนยัน
-              </Button>
-            </>
-          ) : (
-              <Button onClick={handleClose}>
-                ปิด
-              </Button>
-            )
-        }
-
+              }}
+            >
+              ยืนยัน
+            </Button>
+          </>
+        ) : (
+          <Button onClick={handleClose}>ปิด</Button>
+        )}
       </DialogActions>
     </Dialog>
-  )
-}
+  );
+});
+
+export default SummaryDialog;
