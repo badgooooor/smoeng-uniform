@@ -9,14 +9,16 @@ import {
 } from "@material-ui/core";
 import { QRCode } from "react-qr-svg";
 import Product from "../types/product";
-
+import Axios from "axios";
+import { user_store } from "../stores/user";
+import { observer } from "mobx-react";
 interface Props {
   open: boolean;
   orders: Array<Product>;
   onClose: () => void;
 }
 
-export default function SummaryDialog(props: Props) {
+const SummaryDialog = observer((props: Props) => {
   const [confirm, setConfirm] = React.useState(false);
   const [orderId, setOrderId] = React.useState("order.id");
 
@@ -24,6 +26,23 @@ export default function SummaryDialog(props: Props) {
     props.onClose();
     setConfirm(false);
   };
+
+  React.useEffect(() => {
+    async function postOrders() {
+      if (confirm) {
+        const responseData = await Axios.post(
+          `https://asia-northeast1-uniform-smoeng.cloudfunctions.net/api/orders/${user_store.userId}`,
+          {
+            orders: props.orders,
+            status: "unpaid",
+          }
+        ).then((response) => response.data);
+        setOrderId(responseData.ref);
+      }
+    }
+
+    postOrders();
+  }, [confirm]);
 
   return (
     <Dialog open={props.open} onClose={handleClose}>
@@ -75,4 +94,6 @@ export default function SummaryDialog(props: Props) {
       </DialogActions>
     </Dialog>
   );
-}
+});
+
+export default SummaryDialog;
