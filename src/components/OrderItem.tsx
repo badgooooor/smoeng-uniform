@@ -8,13 +8,14 @@ import Axios from "axios";
 import { observer } from "mobx-react";
 import { user_store } from "../stores/user";
 import QRDialog from "./QRDialog";
+import CancelDialog from "./CancelDialog";
 
 function displayStatus(status: string) {
   switch (status) {
     case "unpaid":
       return "ยังไม่จ่าย";
-    case "ready":
-      return "สินค้าพร้อมรับ";
+    case "canceled":
+      return "ยกเลิกคำสั่งซื้อ";
     case "completed":
       return "การสั่งซื้อสำเร็จ";
     default:
@@ -35,20 +36,28 @@ const OrderItem = observer((props: Props) => {
   const [orders, setOrders] = React.useState([]);
   const [qrOrder, setQrOrder] = React.useState("");
   const [qrOpen, setQrOpen] = React.useState(false);
+  const [cancelOpen, setCancelOpen] = React.useState(false);
+  const [cancelOrder, setCancelOrder] = React.useState("");
+
+  async function getOrders() {
+    const newData = (
+      await Axios.get(
+        `https://asia-northeast1-uniform-smoeng.cloudfunctions.net/api/orders/${user_store.userId}`
+      )
+    ).data;
+    setOrders(newData);
+    console.log(newData);
+  }
 
   React.useEffect(() => {
-    async function getOrders() {
-      const newData = (
-        await Axios.get(
-          `https://asia-northeast1-uniform-smoeng.cloudfunctions.net/api/orders/${user_store.userId}`
-        )
-      ).data;
-      setOrders(newData);
-      console.log(newData);
-    }
-
     getOrders();
   }, []);
+
+  React.useEffect(() => {
+    if (cancelOpen === false) {
+      getOrders();
+    }
+  }, [cancelOpen])
 
   return (
     <>
@@ -70,7 +79,8 @@ const OrderItem = observer((props: Props) => {
                     </IconButton>
                     <IconButton
                       onClick={() => {
-                        console.log("Delete");
+                        setCancelOrder(orderItem.id);
+                        setCancelOpen(true);
                       }}
                     >
                       <DeleteIcon />
@@ -95,6 +105,14 @@ const OrderItem = observer((props: Props) => {
         orderId={qrOrder}
         onClose={() => {
           setQrOpen(false);
+        }}
+      />
+      <CancelDialog
+        open={cancelOpen}
+        userId={user_store.userId}
+        orderId={cancelOrder}
+        onClose={() => {
+          setCancelOpen(false);
         }}
       />
     </>
