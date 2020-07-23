@@ -35,9 +35,21 @@ export const signInWithGoogle = () =>
 
       if (isNewUser) {
         const user = await Axios.post(
-          `https://asia-northeast1-uniform-smoeng.cloudfunctions.net/api/users/${userId}`
+          `https://asia-northeast1-uniform-smoeng.cloudfunctions.net/api/users/${userId}`,
+          {
+            name: displayName,
+            email: email,
+          }
         ).then((response) => response.data);
         console.log(user);
+      } else {
+        let fetchedUser = await (
+          await Axios.get(
+            `https://asia-northeast1-uniform-smoeng.cloudfunctions.net/api/users/${userId}`
+          )
+        ).data;
+        console.log(fetchedUser);
+        user_store.updateContact(fetchedUser.telNumber);
       }
       user_store.update(displayName, userId, photoUrl, email);
     })
