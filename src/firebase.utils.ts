@@ -49,7 +49,12 @@ export const signInWithGoogle = () =>
           )
         ).data;
         console.log(fetchedUser);
-        user_store.updateContact(fetchedUser.telNumber);
+        user_store.updateContact(
+          fetchedUser.telNumber,
+          fetchedUser.department,
+          fetchedUser.room
+        );
+        console.log(user_store);
       }
       user_store.update(displayName, userId, photoUrl, email);
     })
