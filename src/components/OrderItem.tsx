@@ -13,11 +13,11 @@ import CancelDialog from "./CancelDialog";
 function displayStatus(status: string) {
   switch (status) {
     case "unpaid":
-      return "ยังไม่จ่าย";
+      return "ยังไม่ชำระเงิน";
     case "canceled":
       return "ยกเลิกคำสั่งซื้อ";
-    case "completed":
-      return "การสั่งซื้อสำเร็จ";
+    case "paid":
+      return "ชำระเงินแล้ว";
     default:
       return "";
   }
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const OrderItem = observer((props: Props) => {
+const OrderItem = observer(() => {
   const classes = useStyles();
   const [orders, setOrders] = React.useState([]);
   const [qrOrder, setQrOrder] = React.useState("");
@@ -57,7 +57,7 @@ const OrderItem = observer((props: Props) => {
     if (cancelOpen === false) {
       getOrders();
     }
-  }, [cancelOpen])
+  }, [cancelOpen]);
 
   return (
     <>

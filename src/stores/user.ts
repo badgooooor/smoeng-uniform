@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action } from "mobx";
 
 class UserStore {
   @observable displayName = "";
@@ -6,9 +6,16 @@ class UserStore {
   @observable userId = "";
   @observable email = "";
   @observable telNumber = "";
+  @observable department = "";
+  @observable room = "";
 
   @action
-  update(displayName: string = '', userId: string = '', photoUrl: string = '', email: string = '') {
+  update(
+    displayName: string = "",
+    userId: string = "",
+    photoUrl: string = "",
+    email: string = ""
+  ) {
     this.displayName = displayName;
     this.userId = userId;
     this.photoUrl = photoUrl;
@@ -16,8 +23,14 @@ class UserStore {
   }
 
   @action
-  updateContact(telNumber: string = '') {
+  updateContact(
+    telNumber: string = "",
+    department: string = "",
+    room: string = ""
+  ) {
     this.telNumber = telNumber;
+    this.department = department;
+    this.room = room;
   }
 
   @action
@@ -27,6 +40,8 @@ class UserStore {
     this.photoUrl = "";
     this.email = "";
     this.telNumber = "";
+    this.department = "";
+    this.room = "";
   }
 }
 
