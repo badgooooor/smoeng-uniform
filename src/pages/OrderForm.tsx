@@ -69,8 +69,14 @@ export default function OrderForm() {
                                     label="สินค้า"
                                     options={[
                                       { value: "เสื้อชอป", label: "เสื้อชอป" },
-                                      { value: "เสื้อโปโล", label: "เสื้อโปโล" },
-                                      { value: "เสื้อกาวน์", label: "เสื้อกาวน์" }
+                                      {
+                                        value: "เสื้อโปโล",
+                                        label: "เสื้อโปโล",
+                                      },
+                                      {
+                                        value: "เสื้อกาวน์",
+                                        label: "เสื้อกาวน์",
+                                      },
                                     ]}
                                     variant="outlined"
                                   />
@@ -86,6 +92,8 @@ export default function OrderForm() {
                                       { value: "M", label: "M" },
                                       { value: "L", label: "L" },
                                       { value: "XL", label: "XL" },
+                                      { value: "2XL", label: "2XL" },
+                                      { value: "3XL", label: "3XL" },
                                     ]}
                                     variant="outlined"
                                   />
@@ -113,8 +121,8 @@ export default function OrderForm() {
                         </Box>
                       ))
                     ) : (
-                        <></>
-                      )}
+                      <></>
+                    )}
                     <Button onClick={() => arrayHelpers.push("")} fullWidth>
                       {values.orders.length == 0 ? (
                         <Box
@@ -126,15 +134,15 @@ export default function OrderForm() {
                           <span>เพิ่มออร์เดอร์เพื่อเริ่มการสั่งซื้อ</span>
                         </Box>
                       ) : (
-                          <Box
-                            display="flex"
-                            component="span"
-                            justifyContent="center"
-                          >
-                            <AddIcon fontSize="small" />
-                            <span>เพิ่มออร์เดอร์</span>
-                          </Box>
-                        )}
+                        <Box
+                          display="flex"
+                          component="span"
+                          justifyContent="center"
+                        >
+                          <AddIcon fontSize="small" />
+                          <span>เพิ่มออร์เดอร์</span>
+                        </Box>
+                      )}
                     </Button>
                     <Button
                       type="submit"
