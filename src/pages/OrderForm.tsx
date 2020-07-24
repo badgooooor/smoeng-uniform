@@ -30,7 +30,6 @@ export default function OrderForm() {
         <Formik
           initialValues={initialValues}
           onSubmit={(values, actions) => {
-            console.log(values, actions);
             setSummaryOpen(true);
           }}
           validate={(values) => {

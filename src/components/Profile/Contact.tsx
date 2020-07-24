@@ -102,7 +102,7 @@ const Contact = observer(() => {
                   room: values.room,
                 }
               );
-              console.log(userResponse);
+
               user_store.updateContact(
                 values.telNumber,
                 values.department,

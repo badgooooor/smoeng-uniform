@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const OrderItem = observer((props: Props) => {
+const OrderItem = observer(() => {
   const classes = useStyles();
   const [orders, setOrders] = React.useState([]);
   const [qrOrder, setQrOrder] = React.useState("");
