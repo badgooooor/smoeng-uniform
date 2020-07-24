@@ -18,9 +18,21 @@ interface Props {
   onClose: () => void;
 }
 
+function displayPrice(product: string, quantity: number) {
+  switch (product) {
+    case "เสื้อชอป":
+      return 360 * quantity;
+    case "เสื้อกาวน์":
+      return 340 * quantity;
+    case "เสื้อโปโล":
+      return 300 * quantity;
+  }
+}
+
 const SummaryDialog = observer((props: Props) => {
   const [confirm, setConfirm] = React.useState(false);
   const [orderId, setOrderId] = React.useState("order.id");
+  const [total, setTotal] = React.useState(0);
 
   const handleClose = () => {
     props.onClose();
@@ -44,6 +56,20 @@ const SummaryDialog = observer((props: Props) => {
     postOrders();
   }, [confirm]);
 
+  React.useEffect(() => {
+    async function getTotal() {
+      let prices = await props.orders.map((order, index) => {
+        let price = displayPrice(order.product, order.amount);
+        return price || 0;
+      });
+
+      let totalPrice = await prices.reduce((acc, curr) => acc + curr);
+      setTotal(totalPrice);
+    }
+
+    getTotal();
+  }, [props.open]);
+
   return (
     <Dialog open={props.open} onClose={handleClose}>
       <DialogContent>
@@ -55,9 +81,11 @@ const SummaryDialog = observer((props: Props) => {
                 {props.orders.map((order, index) => (
                   <li>
                     {order.product} ขนาด {order.size} จำนวน {order.amount} ตัว
+                    ราคา {displayPrice(order.product, order.amount)} บาท
                   </li>
                 ))}
               </ul>
+              <p>รวมทั้งหมด : {total} บาท</p>
             </Box>
             <em>กรุณาตรวจสอบรายการก่อนยืนยันการสั่งซื้อ</em>
           </Box>
