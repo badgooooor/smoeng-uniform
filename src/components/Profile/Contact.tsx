@@ -1,5 +1,4 @@
 import * as React from "react";
-import axios from "axios";
 import { observer } from "mobx-react";
 import { user_store } from "../../stores/user";
 import { Formik, Form, Field, FieldArray } from "formik";
@@ -19,6 +18,7 @@ import {
 import EditIcon from "@material-ui/icons/Edit";
 import Axios from "axios";
 import { overlay_store } from "../../stores/overlay";
+import { getUser, updateUser } from "../../services/user";
 
 const useStyles = makeStyles((theme) => ({
   contact: {
@@ -79,13 +79,9 @@ const Contact = observer(() => {
   const toggleEdit = () => setEditOn(!editOn);
 
   React.useEffect(() => {
-    async function getUser() {
-      const userData = await (
-        await Axios.get(
-          `https://asia-northeast1-uniform-smoeng.cloudfunctions.net/api/users/${user_store.userId}`
-        )
-      ).data;
-
+    async function fetchUser() {
+      const userData = await getUser(user_store.userId);
+      console.log(userData);
       user_store.updateContact(
         userData.telNumber,
         userData.department,
@@ -94,7 +90,7 @@ const Contact = observer(() => {
     }
 
     overlay_store.add();
-    getUser();
+    fetchUser();
     overlay_store.subtract();
   }, []);
 
@@ -127,14 +123,11 @@ const Contact = observer(() => {
             initialValues={initialValues}
             onSubmit={async (values, actions) => {
               overlay_store.add();
-              const userResponse = await Axios.put(
-                `https://asia-northeast1-uniform-smoeng.cloudfunctions.net/api/users/${user_store.userId}`,
-                {
-                  telNumber: values.telNumber,
-                  department: values.department,
-                  room: values.room,
-                }
-              );
+              await updateUser(user_store.userId, {
+                telNumber: values.telNumber,
+                department: values.department,
+                room: values.room,
+              });
 
               user_store.updateContact(
                 values.telNumber,

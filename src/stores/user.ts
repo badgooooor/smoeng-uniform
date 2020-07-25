@@ -8,6 +8,7 @@ class UserStore {
   @observable telNumber = "";
   @observable department = "";
   @observable room = "";
+  @observable isNewUser = false;
 
   @action
   update(
@@ -34,6 +35,11 @@ class UserStore {
   }
 
   @action
+  updateIsNewUser(isNewUser: boolean) {
+    this.isNewUser = isNewUser;
+  }
+
+  @action
   clear() {
     this.displayName = "";
     this.userId = "";
@@ -42,6 +48,7 @@ class UserStore {
     this.telNumber = "";
     this.department = "";
     this.room = "";
+    this.isNewUser = false;
   }
 }
 

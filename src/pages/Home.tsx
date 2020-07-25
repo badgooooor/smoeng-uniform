@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Grid, Box, makeStyles, colors } from "@material-ui/core";
+import { Grid, Box, makeStyles } from "@material-ui/core";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
@@ -24,20 +24,42 @@ const useStyles = makeStyles((theme) => ({
     border: "none",
     outline: "none",
     "&:hover": {
-      border: 'none',
+      border: "none",
       backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText
+      color: theme.palette.primary.contrastText,
     },
     "&:clicked": {
       border: "none",
       backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText
+      color: theme.palette.primary.contrastText,
     },
-    fontSize: "20px"
+    fontSize: "20px",
   },
   catalogImage: {
     width: "400px",
-    margin: "auto"
+    margin: "auto",
+  },
+  profileAnnouncement: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "90%",
+    margin: "auto",
+    backgroundColor: theme.palette.secondary.dark,
+    border: "none",
+    outline: "none",
+    "&:hover": {
+      border: "none",
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText,
+    },
+    "&:clicked": {
+      border: "none",
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText,
+    },
+    fontSize: "20px",
   }
 }));
 
@@ -47,9 +69,19 @@ const Home = observer(() => {
   return (
     <Layout>
       <>
-        {
-          user_store.displayName &&
+        {user_store.displayName && (
           <Grid container spacing={2}>
+            {((user_store.userId !== "" && (user_store.department === "" ||
+          user_store.room === "" ||
+          user_store.telNumber === "")) && (
+            <Grid item xs={12}>
+          <Box className={classes.quickMenu} padding="20px">
+            <Link to="/profile" style={{ textDecoration: "none" }}>
+              กรุณากรอกข้อมูลส่วนตัวที่หน้านี้
+            </Link>
+          </Box>
+          </Grid>
+        )}
             <Grid item xs={12} sm={6}>
               <Link to="/newOrder" style={{ textDecoration: "none" }}>
                 <Box className={classes.quickMenu} component="button">
@@ -67,7 +99,7 @@ const Home = observer(() => {
               </Link>
             </Grid>
           </Grid>
-        }
+        )}
         <Box padding="20px">
           <h2>ไซส์ของเสื้อ</h2>
           <Grid container spacing={2}>
@@ -86,9 +118,8 @@ const Home = observer(() => {
           </Grid>
         </Box>
       </>
-
     </Layout>
   );
-})
+});
 
 export default Home;

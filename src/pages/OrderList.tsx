@@ -1,12 +1,10 @@
 import * as React from "react";
 import Layout from "../containers/Layout";
-import { Grid, Box } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import OrderItem from "../components/OrderItem";
 import Order from "../types/order";
-// import { observe } from "mobx";
-// import { orders_store } from "../stores/orders";
 
 const orders: Array<Order> = [
   {

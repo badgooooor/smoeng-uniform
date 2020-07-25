@@ -1,9 +1,8 @@
-import * as React from "react"
+import * as React from "react";
 import { observer } from "mobx-react";
 import { user_store } from "../stores/user";
 import Layout from "../containers/Layout";
 import { Grid } from "@material-ui/core";
-import EditIcon from '@material-ui/icons/Edit';
 
 import Avatar from "../components/Profile/Avatar";
 import Contact from "../components/Profile/Contact";
@@ -25,6 +24,6 @@ const Profile = observer(() => {
       </Grid>
     </Layout>
   );
-})
+});
 
 export default Profile;
