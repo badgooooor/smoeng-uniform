@@ -9,6 +9,7 @@ import { observer } from "mobx-react";
 import { user_store } from "../stores/user";
 import QRDialog from "./QRDialog";
 import CancelDialog from "./CancelDialog";
+import { overlay_store } from "../stores/overlay";
 
 function displayStatus(status: string) {
   switch (status) {
@@ -50,13 +51,17 @@ const OrderItem = observer(() => {
   }
 
   React.useEffect(() => {
+    overlay_store.add();
     getOrders();
+    overlay_store.subtract();
   }, []);
 
   React.useEffect(() => {
+    overlay_store.add();
     if (cancelOpen === false) {
       getOrders();
     }
+    overlay_store.subtract();
   }, [cancelOpen]);
 
   return (
@@ -77,14 +82,16 @@ const OrderItem = observer(() => {
                     >
                       <CropFreeIcon />
                     </IconButton>
-                    <IconButton
-                      onClick={() => {
-                        setCancelOrder(orderItem.id);
-                        setCancelOpen(true);
-                      }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                    {orderItem.status !== "paid" && (
+                      <IconButton
+                        onClick={() => {
+                          setCancelOrder(orderItem.id);
+                          setCancelOpen(true);
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    )}
                   </Box>
                 </Box>
 

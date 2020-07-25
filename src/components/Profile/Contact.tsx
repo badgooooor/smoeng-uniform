@@ -18,6 +18,7 @@ import {
 } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import Axios from "axios";
+import { overlay_store } from "../../stores/overlay";
 
 const useStyles = makeStyles((theme) => ({
   contact: {
@@ -63,7 +64,9 @@ const Contact = observer(() => {
       );
     }
 
+    overlay_store.add();
     getUser();
+    overlay_store.subtract();
   }, []);
 
   return (
@@ -94,6 +97,7 @@ const Contact = observer(() => {
           <Formik
             initialValues={initialValues}
             onSubmit={async (values, actions) => {
+              overlay_store.add();
               const userResponse = await Axios.put(
                 `https://asia-northeast1-uniform-smoeng.cloudfunctions.net/api/users/${user_store.userId}`,
                 {
@@ -109,6 +113,8 @@ const Contact = observer(() => {
                 values.room
               );
               toggleEdit();
+
+              overlay_store.subtract();
             }}
           >
             <Form>
@@ -152,7 +158,14 @@ const Contact = observer(() => {
                   variant="outlined"
                 />
               </ListItem>
-              <Button type="submit">อัปเดตข้อมูล</Button>
+              <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                fullWidth
+              >
+                อัปเดตข้อมูล
+              </Button>
             </Form>
           </Formik>
         )}
