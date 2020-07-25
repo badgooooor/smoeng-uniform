@@ -12,6 +12,7 @@ import Product from "../types/product";
 import Axios from "axios";
 import { user_store } from "../stores/user";
 import { observer } from "mobx-react";
+import { overlay_store } from "../stores/overlay";
 interface Props {
   open: boolean;
   orders: Array<Product>;
@@ -53,7 +54,9 @@ const SummaryDialog = observer((props: Props) => {
       }
     }
 
+    overlay_store.add();
     postOrders();
+    overlay_store.subtract();
   }, [confirm]);
 
   React.useEffect(() => {
@@ -67,7 +70,9 @@ const SummaryDialog = observer((props: Props) => {
       setTotal(totalPrice);
     }
 
+    overlay_store.add();
     getTotal();
+    overlay_store.subtract();
   }, [props.open]);
 
   return (
