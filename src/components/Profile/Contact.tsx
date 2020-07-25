@@ -32,6 +32,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const departmentList = [
+  "วิศวกรรมโทรคมนาคม",
+  "วิศวกรรมอิเล็กทรอนิกส์",
+  "วิศวกรรมไฟฟ้า",
+  "วิศวกรรมคอมพิวเตอร์",
+  "วิศวกรรมแมคคาทรอนิกส์และออโตเมชั่น",
+  "วิศวกรรมเกษตรอัจฉริยะ",
+  "วิศวกรรมอุตสาหการ",
+  "วิศวกรรมเคมี",
+  "วิศวกรรมโยธา",
+  "วิศวกรรมเครื่องกล",
+  "วิศวกรรมขนส่งทางราง",
+  "[SIIE] Biomedical Engineering",
+  "[SIIE] Computer Innovation Engineering",
+  "[SIIE] Civil Engineering",
+  "[SIIE] Chemical Engineering",
+  "[SIIE] Electrical Engineering",
+  "[SIIE] Engineering Management & Entrepreneurship",
+  "[SIIE] Energy Engineering",
+  "[SIIE] Financial Engineering",
+  "[SIIE] Industrial Engineering & Logistics Management",
+  "[SIIE] Mechanical Engineering",
+  "[SIIE] Robotics & AI Engineering",
+  "[SIIE] Software Engineering",
+];
+const departmentLabel = departmentList.map((department, index) => {
+  return { label: department, value: department };
+});
+
 interface ContactFormValue {
   telNumber: string;
   department: string;
@@ -132,8 +161,9 @@ const Contact = observer(() => {
                   required
                   name={`department`}
                   label="ภาควิชา"
-                  component={TextField}
+                  component={Select}
                   variant="outlined"
+                  options={departmentLabel}
                 />
               </ListItem>
               <ListItem>

@@ -23,15 +23,17 @@ export default function CancelDialog(props: Props) {
   const handleCancel = () => {
     async function cancelOrder() {
       const cancelResponse = await Axios.put(
-        `https://asia-northeast1-uniform-smoeng.cloudfunctions.net/api/orders/${props.userId}/${props.orderId}`, {
-        status: "canceled"
-      }).then((response) => response.data);
+        `https://asia-northeast1-uniform-smoeng.cloudfunctions.net/api/orders/${props.userId}/${props.orderId}`,
+        {
+          status: "canceled",
+        }
+      ).then((response) => response.data);
       console.log(cancelOrder);
     }
 
     cancelOrder();
     props.onClose();
-  }
+  };
 
   return (
     <Dialog open={props.open} onClose={handleClose}>
@@ -41,8 +43,8 @@ export default function CancelDialog(props: Props) {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleCancel}>ใช่</Button>
         <Button onClick={handleClose}>ไม่</Button>
+        <Button onClick={handleCancel}>ใช่</Button>
       </DialogActions>
     </Dialog>
   );
