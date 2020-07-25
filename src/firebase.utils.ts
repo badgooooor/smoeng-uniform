@@ -4,7 +4,6 @@ import "firebase/auth";
 import { user_store } from "./stores/user";
 import Axios from "axios";
 import { createUser, getUser } from "./services/user";
-import { overlay_store } from "./stores/overlay";
 
 dotenv.config();
 
