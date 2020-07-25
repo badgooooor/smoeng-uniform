@@ -23,6 +23,18 @@ export const auth = firebase.auth();
 
 const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
+
+auth
+  .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+  .then(() => {
+    return signInWithGoogle();
+  })
+  .catch((err) => {
+    let errorCode = err.code;
+    let errorMessage = err.message;
+    console.log(errorCode, errorMessage);
+  });
+
 export const signInWithGoogle = () =>
   auth
     .signInWithPopup(provider)
