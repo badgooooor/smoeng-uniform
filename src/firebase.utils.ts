@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import "firebase/auth";
 import { user_store } from "./stores/user";
 import Axios from "axios";
+import { createUser, getUser } from "./services/user";
 
 dotenv.config();
 
@@ -24,16 +25,30 @@ export const auth = firebase.auth();
 const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
 
-auth
-  .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-  .then(() => {
+auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+
+auth.onAuthStateChanged(async (user) => {
+  if (user) {
+    console.log(user);
+    let displayName = user.displayName || "";
+    let email = user.email || "";
+    let photoUrl = user.photoURL || "";
+    let isNewUser = false;
+    let userId = user.providerData[0]?.uid;
+
+    const fetchedUser = await getUser(userId);
+
+    user_store.updateContact(
+      fetchedUser.telNumber,
+      fetchedUser.department,
+      fetchedUser.room
+    );
+
+    user_store.update(displayName, userId, photoUrl, email);
+  } else {
     return signInWithGoogle();
-  })
-  .catch((err) => {
-    let errorCode = err.code;
-    let errorMessage = err.message;
-    console.log(errorCode, errorMessage);
-  });
+  }
+});
 
 export const signInWithGoogle = () =>
   auth
@@ -46,19 +61,13 @@ export const signInWithGoogle = () =>
       let email = result.user?.email || "";
 
       if (isNewUser) {
-        const user = await Axios.post(
-          `https://asia-northeast1-uniform-smoeng.cloudfunctions.net/api/users/${userId}`,
-          {
-            name: displayName,
-            email: email,
-          }
-        ).then((response) => response.data);
+        const user = await createUser(userId, {
+          name: displayName,
+          email: email,
+        });
       } else {
-        let fetchedUser = await (
-          await Axios.get(
-            `https://asia-northeast1-uniform-smoeng.cloudfunctions.net/api/users/${userId}`
-          )
-        ).data;
+        const fetchedUser = await getUser(userId);
+
         user_store.updateContact(
           fetchedUser.telNumber,
           fetchedUser.department,
