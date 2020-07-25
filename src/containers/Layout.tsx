@@ -37,12 +37,7 @@ const Layout: React.FC<Props> = observer((props: Props) => {
           <Box className={classes.body}>{props.children}</Box>
         </>
       ) : (
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          background="#282c34"
-        >
+        <Box display="flex" justifyContent="center" alignItems="center">
           <Loader
             type="Puff"
             color="#00BFFF"

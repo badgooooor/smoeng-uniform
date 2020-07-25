@@ -122,41 +122,52 @@ export default function OrderForm() {
                     ) : (
                       <></>
                     )}
-                    <Button onClick={() => arrayHelpers.push("")} fullWidth>
-                      {values.orders.length == 0 ? (
-                        <Box
-                          display="flex"
-                          component="span"
-                          justifyContent="center"
-                        >
-                          <AddIcon fontSize="small" />
-                          <span>เพิ่มออร์เดอร์เพื่อเริ่มการสั่งซื้อ</span>
-                        </Box>
-                      ) : (
-                        <Box
-                          display="flex"
-                          component="span"
-                          justifyContent="center"
-                        >
-                          <AddIcon fontSize="small" />
-                          <span>เพิ่มออร์เดอร์</span>
-                        </Box>
-                      )}
-                    </Button>
-                    <Button
-                      type="submit"
-                      disabled={values.orders.length == 0}
-                      fullWidth
-                    >
-                      <Box
-                        display="flex"
-                        component="span"
-                        justifyContent="center"
+                    <Box padding="10px">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => arrayHelpers.push("")}
+                        fullWidth
                       >
-                        <ShoppingCartIcon fontSize="small" />
-                        <span>สั่งซื้อ</span>
-                      </Box>
-                    </Button>
+                        {values.orders.length == 0 ? (
+                          <Box
+                            display="flex"
+                            component="span"
+                            justifyContent="center"
+                          >
+                            <AddIcon fontSize="small" />
+                            <span>เพิ่มออร์เดอร์เพื่อเริ่มการสั่งซื้อ</span>
+                          </Box>
+                        ) : (
+                          <Box
+                            display="flex"
+                            component="span"
+                            justifyContent="center"
+                          >
+                            <AddIcon fontSize="small" />
+                            <span>เพิ่มออร์เดอร์</span>
+                          </Box>
+                        )}
+                      </Button>
+                    </Box>
+                    <Box padding="10px">
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        disabled={values.orders.length == 0}
+                        fullWidth
+                      >
+                        <Box
+                          display="flex"
+                          component="span"
+                          justifyContent="center"
+                        >
+                          <ShoppingCartIcon fontSize="small" />
+                          <span>สั่งซื้อ</span>
+                        </Box>
+                      </Button>
+                    </Box>
                   </div>
                 )}
               />
