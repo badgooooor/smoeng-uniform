@@ -93,6 +93,10 @@ export default function OrderForm() {
                                       { value: "XL", label: "XL" },
                                       { value: "2XL", label: "2XL" },
                                       { value: "3XL", label: "3XL" },
+                                      {
+                                        value: "ไซส์พิเศษ",
+                                        label: "ไซส์พิเศษ",
+                                      },
                                     ]}
                                     variant="outlined"
                                   />

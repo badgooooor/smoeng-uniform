@@ -3,7 +3,6 @@ import {
   Dialog,
   Button,
   Box,
-  DialogTitle,
   DialogContent,
   DialogActions,
 } from "@material-ui/core";
@@ -27,6 +26,8 @@ function displayPrice(product: string, quantity: number) {
       return 340 * quantity;
     case "เสื้อโปโล":
       return 300 * quantity;
+    default:
+      return 0;
   }
 }
 
