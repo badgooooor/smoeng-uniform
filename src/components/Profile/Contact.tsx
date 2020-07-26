@@ -56,6 +56,7 @@ const departmentList = [
   "[SIIE] Mechanical Engineering",
   "[SIIE] Robotics & AI Engineering",
   "[SIIE] Software Engineering",
+  "หลักสูตรปริญญาต่อเนื่อง",
 ];
 const departmentLabel = departmentList.map((department, index) => {
   return { label: department, value: department };
